@@ -33,12 +33,63 @@ and optimized relational data mapping.
 
 ##  System Architecture
 
-```text
-├── .mvn/                  # Maven wrapper configuration
-├── src/
-│   └── main/
-│       ├── java/          # Core Java source code (Controllers, Services, Models, Security)
-│       └── resources/     # Application properties and SQL configuration files
-├── .gitignore             # Git ignore configurations
-├── pom.xml                # Maven project dependencies
-└── README.md
+    ├── .mvn/                  # Maven wrapper configuration
+    ├── src/
+    │   └── main/
+    │       ├── java/          # Core Java source code (Controllers, Services, Models, Security)
+    │       └── resources/     # Application properties and SQL configuration files
+    ├── .gitignore             # Git ignore configurations
+    ├── pom.xml                # Maven project dependencies
+    └── README.md
+
+## Prerequisites
+
+1. Java Development Kit (JDK) 17 installed
+
+2. MySQL Server running locally
+
+3.Maven installed (or use the provided ./mvnw wrapper)
+
+Step 1: Clone the Repository
+
+    git clone [https://github.com/sunidhimishra17/social-media-backend-api.git]
+    
+    cd social-media-backend-api
+    
+Step 2: Configure Database Settings
+
+Open src/main/resources/application.properties (or application.yml) and update the MySQL configuration with your local database credentials:
+
+    spring.datasource.url=jdbc:mysql://localhost:3306/YOUR_DB_NAME
+    
+    spring.datasource.username=YOUR_MYSQL_USERNAME
+    
+    spring.datasource.password=YOUR_MYSQL_PASSWORD
+    
+    spring.jpa.hibernate.ddl-auto=update
+    
+Step 3: Build and Run the Application
+
+Using the terminal, compile and run the Spring Boot app:
+
+On Windows:
+
+    mvnw.cmd spring-boot:run
+
+On macOS/Linux:
+
+    chmod +x mvnw
+    
+    ./mvnw spring-boot:run
+    
+## Core API Endpoints
+
+| HTTP Method | Endpoint| Description | Auth Required |
+|:--- | :--- | :--- | :---|
+|**POST**|'/api/auth/signup'|Register a new user profile|No|
+|**POST**|'/api/auth/login'|Authenticate user & generate JWT token|No|
+|**GET**|'/api/posts'|Retrieve optimized social media feed|Yes (JWT)|
+|**POST**|'/api/posts'|Publish a new post|Yes (JWT)|
+|**POST**|'/api/posts/{id}/like'|Toggle like status on a post|Yes (JWT)|
+|**POST**|'/api/stories'|Upload a story (auto-expires in 24h)|Yes (JWT)|
+|**GET**|'/api/analytics'|Fetch engagement insights dashboard|Yes (Admin)|
